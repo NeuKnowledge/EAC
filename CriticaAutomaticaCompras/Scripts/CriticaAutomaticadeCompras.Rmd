@@ -1,0 +1,79 @@
+---
+title: "Crítica Automática de Compras"
+output: pdf_document
+---
+
+A seguir apresentamos alguns dados consolidados a partir dos arquivos recebidos. 
+
+Gostaríamos que vocês verificassem se os dados conferem com o que vocês enviaram. 
+
+As colunas de totais representam o somatório da coluna respectiva na tabela. 
+
+ESTOQUE :
+```{r estoque, echo=FALSE,results=T}
+library(xtable)
+library(knitr)
+#load(file="estoqueSubset.RData")
+#estoque <- estoqueSubset
+load(file="estoque.RData")
+numRowsEst <- format(nrow(estoque),big.mark=".",decimal.mark=",")
+totCustoMedioEst <- format(round(sum(estoque$CUSTO_MEDIO),2),big.mark=".",decimal.mark=",",small.interval=2)
+minCustoMedioEst <- format(round(min(estoque$CUSTO_MEDIO),2),big.mark=".",decimal.mark=",",small.interval=2)
+maxCustoMedioEst <- format(round(max(estoque$CUSTO_MEDIO),2),big.mark=".",decimal.mark=",",small.interval=2)
+totEstoque <- format(round(sum(estoque$ESTOQUE),2),big.mark=".",decimal.mark=",",small.interval=2)
+minDataEst <- min(estoque$DATA_ESTOQUE)
+maxDataEst <- max(estoque$DATA_ESTOQUE)
+estoqueDescritivo <- cbind(numRowsEst,totCustoMedioEst,minCustoMedioEst,maxCustoMedioEst,totEstoque,minDataEst,maxDataEst)
+estoqueDescritivo <- xtable(estoqueDescritivo)
+names(estoqueDescritivo) <- c("Tot Regs","Tot Cst Médio","Menor Cst Médio","Maior Cst Médio","Tot Estoque","Data Inicial","Data Final")
+kable(estoqueDescritivo)
+
+```
+
+COMPRAS :
+```{r compras, echo=FALSE,results=T}
+library(xtable)
+library(knitr)
+#load(file="comprasSubset.RData")
+#compras <- comprasSubset
+load(file="compras.RData")
+numRowsComp <- format(nrow(compras),big.mark=".",decimal.mark=",")
+totCustoUnitarioComp <- format(round(sum(compras$CUSTO_UNITARIO),2),big.mark=".",decimal.mark=",",small.interval=2)
+minCustoUnitarioComp <- format(round(min(compras$CUSTO_UNITARIO),2),big.mark=".",decimal.mark=",",small.interval=2)
+maxCustoUnitarioComp <- format(round(max(compras$CUSTO_UNITARIO),2),big.mark=".",decimal.mark=",",small.interval=2)
+totCompras <- format(round(sum(compras$QTDE_RECEBIDA),2),big.mark=".",decimal.mark=",",small.interval=2)
+minDataComp <- min(compras$DATA_ENTRADA)
+maxDataComp <- max(compras$DATA_ENTRADA)
+comprasDescritivo <- cbind(numRowsComp,totCustoUnitarioComp,minCustoUnitarioComp,maxCustoUnitarioComp, totCompras,minDataComp,maxDataComp)
+comprasDescritivo <- xtable(comprasDescritivo)
+names(comprasDescritivo) <- c("Tot Regs","Tot Cst Unit.","Menor Cst Unit.","Maior Cst Unit.","Tot Compras","Data Inicial","Data Final")
+kable(comprasDescritivo)
+
+```
+
+VENDAS :
+```{r vendas, echo=FALSE,results=T}
+library(xtable)
+library(knitr)
+#load(file="vendasSubset.RData")
+#vendas <- vendasSubset
+load(file="vendas.RData")
+numRowsVendas <- format(round(nrow(vendas),2),big.mark=".",decimal.mark=",",small.interval=2)
+totVlrBrutoVendas <- format(round(sum(vendas$VALOR_BRUTO),2),big.mark=".",decimal.mark=",",small.interval=2)
+minVlrBrutoVendas <- format(round(min(vendas$VALOR_BRUTO),2),big.mark=".",decimal.mark=",",small.interval=2)
+maxVlrBrutoVendas <- format(round(max(vendas$VALOR_BRUTO),2),big.mark=".",decimal.mark=",",small.interval=2)
+totVlrLiquido <- format(round(sum(vendas$VALOR_LIQUIDO),2),big.mark=".",decimal.mark=",",small.interval=2)
+minVlrLiquido <- format(round(min(vendas$VALOR_LIQUIDO),2),big.mark=".",decimal.mark=",",small.interval=2)
+maxVlrLiquido <- format(round(max(vendas$VALOR_LIQUIDO),2),big.mark=".",decimal.mark=",",small.interval=2)
+maxDataVendas <- max(vendas$DATA)
+minDataVendas <- min(vendas$DATA)
+vendasDescritivo <- cbind(numRowsVendas, totVlrBrutoVendas,minVlrBrutoVendas,maxVlrBrutoVendas,totVlrLiquido,minVlrLiquido,maxVlrLiquido)
+vendasDatas <- cbind(minDataVendas,maxDataVendas)
+vendasDescritivo <- xtable(vendasDescritivo)
+vendasDatas <- xtable(vendasDatas)
+names(vendasDescritivo) <- c("Tot Regs","Tot Vlr Brt","Menor Vlr Brt","Maior Vlr Brt","Tot Vlr Líq.","Menor Vlr Liq.","Maior Vlr Liq.")
+names(vendasDatas) <- c("Data Inicial","Data Final")
+kable(vendasDescritivo)
+kable(vendasDatas)
+
+```
