@@ -23,8 +23,22 @@ shinyUI(fluidPage(
                                h1(strong("Estoque"), align = "center"),
                                plotOutput("estoque")
                         )
-                      )
-             ) 
-  )
+                      ),
+                      fluidRow(
+                        column(2),                               
+                        column(9,                
+                               h1(strong("Estoque Calculado"), align = "center"),                                      
+                               plotOutput("estoqueCalculado")
+                        )
+                      ),
+                      fluidRow(
+                        column(2),                               
+                        column(9,                
+                               h1(strong("Compras - Vendas"), align = "center"),
+                               plotOutput("difComprasVendas")
+                        )
+                      )                      
+             )
+ )
 )
 )
